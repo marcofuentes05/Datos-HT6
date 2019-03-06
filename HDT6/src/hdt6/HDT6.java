@@ -80,11 +80,11 @@ public class HDT6 {
         while (opcion != 7){
             //Se muestra menu de opciones a realizar con las cartas y se lee
             String menu = "\nElige una opcion:\n1. Agregar una carta al mazo\n2. Mostrar tipo de una carta especifica\n3. Mostrar nombre, tipo y cantidad de cada carta en el mazo\n4. Mostrar nombre, tipo y cantidad de cada carta en el mazo, ordenadas por tipo\n5. Mostrar el nombre y tipo de todas las cartas existentes\n6. Mostrar nombre y tipo de todas las cartas ordenadas por tipo\n7. Salir";
-            System.out.println(menu);
+            System.out.print(menu);
             try{
                 opcion = scan.nextInt();
             } catch(InputMismatchException e){
-                System.out.println("Ingresaste una opcion incorrecta, se tomara como la primera opcion");
+                System.out.print("Ingresaste una opcion incorrecta, se tomara como la primera opcion");
                 opcion = 1;
             }
             switch(opcion){
@@ -92,13 +92,13 @@ public class HDT6 {
                     System.out.println("Eleccion  -->   Agregar una carta al mazo");
                     System.out.println("Ingresa el nombre de la carta que deseas agregar");
                     nombre = scan.next();
-                    if(cartas.containsKey(nombre)){
+                    if(cartas.containsKey(nombre)==true){
                         tipo = cartas.get(nombre);
                         mazo.put(nombre, tipo);
                         cartas.remove(nombre);
-                        System.out.println("Carta agregada con exito");
+                        System.out.print("Carta agregada con exito");
                     } else {
-                        System.out.println("No hay ese nombre de carta");
+                        System.out.print("No hay ese nombre de carta");
                     }
                    
                     break;
