@@ -38,8 +38,8 @@ public class HDT6 {
         Map<String, String> mazo;
         MapFactory fabrica = new MapFactory();
         ArrayList<String> lectura = new ArrayList<>();
-        int estiloMap, opcion=0;
-        String tipo, nombre;
+        int estiloMap;
+        String tipo, opcion="0";
         Scanner scan = new Scanner(System.in);
         
         //Se lee el archivo txt y se almacena su data en 'lectura'
@@ -62,11 +62,13 @@ public class HDT6 {
             //Se agrega el nombre y tipo al hashmap de cartas totales como key y value
             cartas.put(k,v);
         }
+        System.out.print(cartas);
         
         //Se imprime el menu de tipos de maps para crear el mazo
         System.out.println("    B I E N V E N I D O\nIngrese el tipo de Map que desea utilizar para el mazo de sus cartas:\n1. HashMap\n2. TreeMap\n3. Linked HashMap");
         //Programacion defensiva y creacion del mazo segun la eleccion de Map
-        try{
+        estiloMap =scan.nextInt();
+        /*try{
             estiloMap =scan.nextInt();
             if (estiloMap > 3){
                 System.out.print("Ingresaste un numero mayor a 3, se ejecutara como un Hasmap");
@@ -75,54 +77,40 @@ public class HDT6 {
         }catch(InputMismatchException e){
             estiloMap = 1;
             System.out.print("Los errores pasan, al parecer no ingresaste una opcion correcta! Se ejecutara con un HashMap");
-        }
+        }*/
         mazo = fabrica.MapCreator(estiloMap);
-        while (opcion != 7){
-            //Se muestra menu de opciones a realizar con las cartas y se lee
-            String menu = "\nElige una opcion:\n1. Agregar una carta al mazo\n2. Mostrar tipo de una carta especifica\n3. Mostrar nombre, tipo y cantidad de cada carta en el mazo\n4. Mostrar nombre, tipo y cantidad de cada carta en el mazo, ordenadas por tipo\n5. Mostrar el nombre y tipo de todas las cartas existentes\n6. Mostrar nombre y tipo de todas las cartas ordenadas por tipo\n7. Salir";
+        String menu = "\nElige una opcion:\n1. Agregar una carta al mazo\n2. Mostrar tipo de una carta especifica\n3. Mostrar nombre, tipo y cantidad de cada carta en el mazo\n4. Mostrar nombre, tipo y cantidad de cada carta en el mazo, ordenadas por tipo\n5. Mostrar el nombre y tipo de todas las cartas existentes\n6. Mostrar nombre y tipo de todas las cartas ordenadas por tipo\n7. Salir\n";
+        System.out.print(menu);
+        opcion = scan.next();
+        while (!opcion.equals("7")){
+            /*Se muestra menu de opciones a realizar con las cartas y se lee
+            String menu = "\nElige una opcion:\n1. Agregar una carta al mazo\n2. Mostrar tipo de una carta especifica\n3. Mostrar nombre, tipo y cantidad de cada carta en el mazo\n4. Mostrar nombre, tipo y cantidad de cada carta en el mazo, ordenadas por tipo\n5. Mostrar el nombre y tipo de todas las cartas existentes\n6. Mostrar nombre y tipo de todas las cartas ordenadas por tipo\n7. Salir\n";
             System.out.print(menu);
-            try{
+            opcion = scan.next();*/
+            /*try{
                 opcion = scan.nextInt();
             } catch(InputMismatchException e){
                 System.out.print("Ingresaste una opcion incorrecta, se tomara como la primera opcion");
                 opcion = 1;
+            }*/
+            if(opcion.equals("1")){
+                System.out.println("Eleccion  -->   Agregar una carta al mazo");
+                System.out.println("Ingresa el nombre de la carta que deseas agregar");
+                String nombre = scan.next();
+                if(cartas.containsKey(nombre)){
+                    tipo = cartas.get(nombre);
+                    mazo.put(nombre, tipo);
+                    cartas.remove(nombre);
+                    System.out.print("Carta agregada con exito");
+                } else {
+                    System.out.print("No hay ese nombre de carta");
+                }
             }
-            switch(opcion){
-                case 1:
-                    System.out.println("Eleccion  -->   Agregar una carta al mazo");
-                    System.out.println("Ingresa el nombre de la carta que deseas agregar");
-                    nombre = scan.next();
-                    if(cartas.containsKey(nombre)==true){
-                        tipo = cartas.get(nombre);
-                        mazo.put(nombre, tipo);
-                        cartas.remove(nombre);
-                        System.out.print("Carta agregada con exito");
-                    } else {
-                        System.out.print("No hay ese nombre de carta");
-                    }
+            //Se muestra menu de opciones a realizar con las cartas y se lee
+            System.out.print(menu);
+            opcion = scan.next();
                    
-                    break;
-                
-                case 2:
-                    break;
-                
-                case 3:
-                    System.out.println("HOla");
-                    break;
-                    
-                case 4:
-                    break;
-                    
-                case 5:
-                    break;
-                    
-                case 6:
-                    break;
-                    
-                case 7:
-                    System.out.println("Byeee, Ciao, adios!");
-                    break;
-            }
+             
         }
         
         
