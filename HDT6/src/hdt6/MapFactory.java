@@ -3,7 +3,7 @@
  * Esta clase funciona como Factory de Maps que el user
  * seleccione en el main para guardar sus cartas
  */
-package hdt6;
+//package hdt6;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
