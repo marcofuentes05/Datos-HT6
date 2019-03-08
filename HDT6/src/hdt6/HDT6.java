@@ -1,3 +1,4 @@
+
 /*
  *        Algoritmos y Estructuras de Datos - Sección 10
  * El main lee un archivo txt con todas las cartas disponibles y las guarda en 
@@ -31,7 +32,7 @@ public class HDT6 {
         Map<String, String> mazo;
         MapFactory fabrica = new MapFactory();
         ArrayList<String> lectura = new ArrayList<>();
-        int estiloMap;
+        int estiloMap, seleccion = 0;
         String tipo, opcion="0";
         Scanner scan = new Scanner(System.in);
 
@@ -47,9 +48,9 @@ public class HDT6 {
                 String item = lectura.get(i);
                 //System.out.println(item);
                 String[] arr = item.split("[|]");
-                String k = arr[0].toString();
+                String k = arr[0];
                 nombres.add(arr[0]);
-                String v = arr[1].toString();
+                String v = arr[1];
                 //Se agrega el nombre y tipo al hashmap de cartas totales como key y value
                 cartas.put(k,v);
             }
@@ -57,153 +58,151 @@ public class HDT6 {
             //System.out.println(cartas);
 
             //Se imprime el menu de tipos de maps para crear el mazo
-            System.out.println("    B I E N V E N I D O\nIngrese el tipo de Map que desea utilizar para el mazo de sus cartas:\n1. HashMap\n2. TreeMap\n3. Linked HashMap");
+            System.out.println("    B I E N V E N I D O  \n\n\nIngrese el tipo de Map que desea utilizar para el mazo de sus cartas:\n1. HashMap\n2. TreeMap\n3. Linked HashMap");
             //Programacion defensiva y creacion del mazo segun la eleccion de Map
             estiloMap =scan.nextInt();
-        /*try{
-            estiloMap =scan.nextInt();
-            if (estiloMap > 3){
-                System.out.print("Ingresaste un numero mayor a 3, se ejecutara como un Hasmap");
-                estiloMap=1;
-            }
-        }catch(InputMismatchException e){
-            estiloMap = 1;
-            System.out.print("Los errores pasan, al parecer no ingresaste una opcion correcta! Se ejecutara con un HashMap");
-        }*/
             mazo = fabrica.MapCreator(estiloMap);
-            String menu = "\nElige una opcion:\n1. Agregar una carta al mazo\n2. Mostrar tipo de una carta especifica\n3. Mostrar nombre, tipo y cantidad de cada carta en el mazo\n4. Mostrar nombre, tipo y cantidad de cada carta en el mazo, ordenadas por tipo\n5. Mostrar el nombre y tipo de todas las cartas existentes\n6. Mostrar nombre y tipo de todas las cartas ordenadas por tipo\n7. Salir\n";
-            System.out.print(menu);
-            opcion = scan.next();
-            while (!opcion.equals("7")){
-            /*Se muestra menu de opciones a realizar con las cartas y se lee
-            String menu = "\nElige una opcion:\n1. Agregar una carta al mazo\n2. Mostrar tipo de una carta especifica\n3. Mostrar nombre, tipo y cantidad de cada carta en el mazo\n4. Mostrar nombre, tipo y cantidad de cada carta en el mazo, ordenadas por tipo\n5. Mostrar el nombre y tipo de todas las cartas existentes\n6. Mostrar nombre y tipo de todas las cartas ordenadas por tipo\n7. Salir\n";
-            System.out.print(menu);
-            opcion = scan.next();*/
-            /*try{
-                opcion = scan.nextInt();
-            } catch(InputMismatchException e){
-                System.out.print("Ingresaste una opcion incorrecta, se tomara como la primera opcion");
-                opcion = 1;
-            }*/
-                if(opcion.equals("1")){
-                    System.out.println("Eleccion  -->   Agregar una carta al mazo");
-                    System.out.println("Ingresa el nombre de la carta que deseas agregar");
-                    Scanner sc = new Scanner(System.in);
-                    String nombre = sc.nextLine();
-                    if(cartas.containsKey(nombre)){
-                        tipo = cartas.get(nombre);
-                        mazo.put(nombre, tipo);
-                        cartas.remove(nombre);
-                        cartasU.add(nombre);
-                        System.out.print("Carta agregada con exito");
-                    } else {
-                        System.out.print("Esa carta no existe en el sistema...");
-                    }
-                }else if (opcion.equals("2")){
-                    System.out.println("Tipo de Carta  -->   Ingrese el nombre de la carta que desea");
-                    Scanner sc = new Scanner(System.in);
-                    String nombre = sc.nextLine();
-                    if (cartas.containsKey(nombre)){
-                        System.out.println("Esa carta es de tipo: "+ cartas.get(nombre));
-                    }else{
-                        System.out.println("Esa carta no existe en el sistema...");
-                    }
-                }else if(opcion.equals("3")){
-                    if (!mazo.isEmpty()){
-                        int monstruos = 0,trampas = 0, hechizos = 0;
-                        for (int i =0;i< cartasU.size();i++){
-                            System.out.println(cartasU.get(i));
-                            if (mazo.get(cartasU.get(i)).equals("Monstruo")){
-                                monstruos++;
-                            }else if(mazo.get(cartasU.get(i)).equals("Hechizo")){
-                                hechizos++;
-                            }else if(mazo.get(cartasU.get(i)).equals("Trampa")){
-                                trampas++;
-                            }
+            String menu = "\n\nElige una opcion:\n1. Agregar una carta a tu mazo\n2. Mostrar tipo de una carta especifica del mazo general\n3. Mostrar nombre, tipo y cantidad de cada carta en tu mazo\n4. Mostrar nombre, tipo y cantidad de cada carta en tu mazo, ordenadas por tipo\n5. Mostrar el nombre y tipo de todas las cartas existentes para elegir\n6. Mostrar nombre y tipo de todas las cartas en el mazo general ordenadas por tipo\n7. Salir\n";
+            System.out.print(menu+"\n");
+            //opcion = scan.next();
+            seleccion = scan.nextInt();
+            
+            // EMPIEZA EL CASE
+            Scanner sc = new Scanner(System.in);
+            String nombre = "";
+            while (seleccion != 7){
+                switch(seleccion){
+                    case(1):
+                        System.out.println("\nAgregar  -->   Agregar una carta al mazo");
+                        System.out.println("Ingresa el nombre de la carta que deseas agregar\n");
+                        nombre = sc.nextLine();
+                        if(cartas.containsKey(nombre)){
+                            tipo = cartas.get(nombre);
+                            mazo.put(nombre, tipo);
+                            cartas.remove(nombre);
+                            cartasU.add(nombre);
+                            System.out.print("\nCarta agregada con exito!");
+                        } else {
+                            System.out.print("\nEsa carta no existe en el sistema...");
                         }
-                        System.out.println("Existen "+monstruos+" monstruos...");
-                        System.out.println("Existen "+hechizos+" hechizos...");
-                        System.out.println("Existen "+trampas+" trampas... \n\n\n");
-                        System.out.println("Estas son las cartas: ");
-                        mazo.forEach((k,v) -> System.out.println(k + " de tipo "+ v));
-                    }else{
-                        System.out.println("El mazo del usuario esta vacio...");
-                    }
-                }else if(opcion.equals("4")){
-                    if (!mazo.isEmpty()){
-                        ArrayList<String> monstruos = new ArrayList<>();
-                        ArrayList<String> hechizos = new ArrayList<>();
-                        ArrayList<String> trampas = new ArrayList<>();
-                        for (int i = 0;i<cartasU.size(); i++){
-                            if (mazo.get(cartasU.get(i)).equals("Monstruo")){
-                                monstruos.add(cartasU.get(i));
-                            }else if (mazo.get(cartasU.get(i)).equals("Hechizo")){
-                                hechizos.add(cartasU.get(i));
-                            }else{
-                                trampas.add(cartasU.get(i));
-                            }
+                    break;
+                        
+                    case(2):
+                        System.out.println("\nTipo de Carta  -->   Ingrese el nombre de la carta del mazo general de la que desea saber el tipo\n");
+                        nombre = sc.nextLine();
+                        if (cartas.containsKey(nombre)){
+                            System.out.println("\nLa carta " + nombre + " es de tipo: " + cartas.get(nombre));
+                        }else{
+                            System.out.println("\nEsa carta no existe en el sistema...");
                         }
-                        Collections.sort(monstruos);
-                        Collections.sort(hechizos);
-                        Collections.sort(trampas);
+                    break;
+                    case(3):
+                        if (!mazo.isEmpty()){
+                            System.out.println("\nVer tu mazo  -->   Mostrar el nombre, tipo y cantidad de cartas en el mazo personal\n");
+                            int monstruos = 0,trampas = 0, hechizos = 0;
+                            for (int i =0;i< cartasU.size();i++){
+                                if (mazo.get(cartasU.get(i)).equals("Monstruo")){
+                                    monstruos++;
+                                }else if(mazo.get(cartasU.get(i)).equals("Hechizo")){
+                                    hechizos++;
+                                }else if(mazo.get(cartasU.get(i)).equals("Trampa")){
+                                    trampas++;
+                                }
+                            }
+                            System.out.println("Existen "+monstruos+" monstruos...");
+                            System.out.println("Existen "+hechizos+" hechizos...");
+                            System.out.println("Existen "+trampas+" trampas... \n\n\n");
+                            System.out.println("Estas son las cartas: ");
+                            mazo.forEach((k,v) -> System.out.println("\n"+ k + " ----TIPO--->   "+ v));
+                        }else{
+                            System.out.println("\nEl mazo del usuario esta vacio...");
+                        }
+                    break;
+                    case(4):
+                        if (!mazo.isEmpty()){
+                            System.out.println("\nTu mazo ordenado  -->   Mostrar nombre, tipo y cantidad de cada carta en el mazo, ordenadas por tipo\n");
+                            ArrayList<String> monstruos = new ArrayList<>();
+                            ArrayList<String> hechizos = new ArrayList<>();
+                            ArrayList<String> trampas = new ArrayList<>();
+                            for (int i = 0;i<cartasU.size(); i++){
+                                if (mazo.get(cartasU.get(i)).equals("Monstruo")){
+                                    monstruos.add(cartasU.get(i));
+                                }else if (mazo.get(cartasU.get(i)).equals("Hechizo")){
+                                    hechizos.add(cartasU.get(i));
+                                }else{
+                                    trampas.add(cartasU.get(i));
+                                }
+                            }
+                            Collections.sort(monstruos);
+                            Collections.sort(hechizos);
+                            Collections.sort(trampas);
 
-                        System.out.println("Los monstruos del usuario son: ");
-                        monstruos.forEach((v) -> System.out.println(v));
-                        System.out.println("Los hechizos del usuario son: ");
-                        hechizos.forEach((v) -> System.out.println(v));
-                        System.out.println("Las trampas del usuario son: ");
-                        trampas.forEach((v) -> System.out.println(v));
+                            System.out.println("\nLos MONSTRUOS del usuario son: ");
+                            monstruos.forEach((v) -> System.out.println("\n" +v));
+                            System.out.println("\nLos HECHIZOS del usuario son: ");
+                            hechizos.forEach((v) -> System.out.println("\n"+v));
+                            System.out.println("\nLas TRAMPAS del usuario son: ");
+                            trampas.forEach((v) -> System.out.println("\n"+v));
 
-                    }else{
-                        System.out.println("El mazo del usuario esta vacio...");
-                    }
-                }else if (opcion.equals("5")){
-                    if (!cartas.isEmpty()){
-                        cartas.forEach((k,v) -> System.out.println(k + ", de tipo "+ v));
+                        }else{
+                            System.out.println("\nEl mazo del usuario esta vacio...");
+                        }
+                    break;
+                    case(5):
+                        System.out.println("\nCartas disponibles  -->   Mostrar el nombre y tipo de todas las cartas del mazo general\n");
+                        if (!cartas.isEmpty()){
+                        cartas.forEach((k,v) -> System.out.println("\n-------------------\nNombre:  " + k + "\nTipo:  "+ v + "\n-------------------\n"));
                     }else{
                         System.out.println("No hay cartas en el sistema...");
                     }
-                }else if(opcion.equals("6")){
-                    if (!cartas.isEmpty()){
-                        ArrayList<String> monstruos = new ArrayList<>();
-                        ArrayList<String> hechizos = new ArrayList<>();
-                        ArrayList<String> trampas = new ArrayList<>();
+                    break;
+                    case(6):
+                        if (!cartas.isEmpty()){
+                            System.out.println("Mazo General Ordenado  -->   Mostrar nombre y tipo de todas las cartas disponibles ordenadas por tipo");
+                            ArrayList<String> monstruos = new ArrayList<>();
+                            ArrayList<String> hechizos = new ArrayList<>();
+                            ArrayList<String> trampas = new ArrayList<>();
 
-                        for (int i = 0;i<nombres.size(); i++){
-                            if (cartas.get(nombres.get(i)).equals("Monstruo")){
-                                monstruos.add(nombres.get(i));
-                            }else if (cartas.get(nombres.get(i)).equals("Hechizo")){
-                                hechizos.add(nombres.get(i));
-                            }else if(cartas.get(nombres.get(i)).equals("Trampa")){
-                                trampas.add(nombres.get(i));
+                            for (int i = 0;i<nombres.size(); i++){
+                                if(cartas.get(nombres.get(i)).equals("Monstruo")){
+                                    monstruos.add(nombres.get(i));
+                                }else if (cartas.get(nombres.get(i)).equals("Hechizo")){
+                                    hechizos.add(nombres.get(i));
+                                }else if(cartas.get(nombres.get(i)).equals("Trampa")){
+                                    trampas.add(nombres.get(i));
+                                }
                             }
-                        }
 
-                        System.out.println("Los monstruos son: ");
-                        for (int i = 0;i < monstruos.size();i++){
-                            System.out.println(monstruos.get(i));
-                        }
+                            System.out.println("\n\n-------------\nMONSTRUOS\n-------------\n\n\n");
+                            for (int i = 0;i < monstruos.size();i++){
+                                System.out.println(i +". " + monstruos.get(i));
+                            }
 
-                        System.out.println("Los hechizos son: ");
-                        for (int i = 0;i < hechizos.size();i++){
-                            System.out.println(hechizos.get(i));
-                        }
+                            System.out.println("\n\n-------------\nHECHIZOS\n-------------\n\n\n");
+                            for (int i = 0;i < hechizos.size();i++){
+                                System.out.println(i +". " +hechizos.get(i));
+                            }
 
-                        System.out.println("Las trampas son: ");
-                        for (int i = 0;i < trampas.size();i++){
-                            System.out.println(trampas.get(i));
+                            System.out.println("\n-------------\n\n\nTRAMPAS\n-------------\n\n\n");
+                            for (int i = 0;i < trampas.size();i++){
+                                System.out.println(i +". " + trampas.get(i));
+                            }
+                        }else{
+                            System.out.println("\nNo hay cartas en el sistema...");
                         }
-                    }else{
-                        System.out.println("No hay cartas en el sistema...");
-                    }
+                    break;
+                    default:
+                        System.out.println("¡¡ERROR!! Opcion invalida");
+                    break;
                 }
                 //Se muestra menu de opciones a realizar con las cartas y se lee
                 System.out.print(menu);
-                opcion = scan.next();
-            }
+                seleccion = scan.nextInt();
+            } //TERMINAN EL CASE
+           
         } catch (IOException e){
             System.out.println("Error al leer el archivo");
         }
-        System.out.println("Hasta luego!");
+        System.out.println("\n \\-___-//  ¡Hasta luego!  \\-___-// ");
     }	
 }
