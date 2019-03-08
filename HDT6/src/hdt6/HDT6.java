@@ -27,7 +27,7 @@ public class HDT6 {
      */
     public static void main(String[] args) {        
         // A T R I B U T O S
-        Map<String, String> cartas = new HashMap<>();
+        Map<String, String> cartas;
         ArrayList<String> nombres = new ArrayList<>(), cartasU = new ArrayList<>();
         Map<String, String> mazo;
         MapFactory fabrica = new MapFactory();
@@ -36,6 +36,16 @@ public class HDT6 {
         String tipo, opcion="0";
         Scanner scan = new Scanner(System.in);
 
+        
+        //Se imprime el menu de tipos de maps para crear el mazo
+        System.out.println("    B I E N V E N I D O  \n\n\nIngrese el tipo de Map que desea utilizar para los mazos de las cartas:\n1. HashMap\n2. TreeMap\n3. Linked HashMap");
+        //Programacion defensiva y creacion del mazo segun la eleccion de Map
+        estiloMap =scan.nextInt();
+        mazo = fabrica.MapCreator(estiloMap);
+        cartas = fabrica.MapCreator(estiloMap);
+        if (estiloMap>3){
+            System.out.println("Opcion incorrecta!! Se ejecutara como un Linked Hashmap");
+        }
         //Se lee el archivo txt y se almacena su data en 'lectura'
         try{
             Stream<String> lines = Files.lines(
@@ -56,12 +66,7 @@ public class HDT6 {
             }
             //Ya se comprobo que lee el archivo correctamente
             //System.out.println(cartas);
-
-            //Se imprime el menu de tipos de maps para crear el mazo
-            System.out.println("    B I E N V E N I D O  \n\n\nIngrese el tipo de Map que desea utilizar para el mazo de sus cartas:\n1. HashMap\n2. TreeMap\n3. Linked HashMap");
-            //Programacion defensiva y creacion del mazo segun la eleccion de Map
-            estiloMap =scan.nextInt();
-            mazo = fabrica.MapCreator(estiloMap);
+       
             String menu = "\n\nElige una opcion:\n1. Agregar una carta a tu mazo\n2. Mostrar tipo de una carta especifica del mazo general\n3. Mostrar nombre, tipo y cantidad de cada carta en tu mazo\n4. Mostrar nombre, tipo y cantidad de cada carta en tu mazo, ordenadas por tipo\n5. Mostrar el nombre y tipo de todas las cartas existentes para elegir\n6. Mostrar nombre y tipo de todas las cartas en el mazo general ordenadas por tipo\n7. Salir\n";
             System.out.print(menu+"\n");
             //opcion = scan.next();

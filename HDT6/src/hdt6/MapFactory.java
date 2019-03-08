@@ -1,3 +1,4 @@
+
 /*
  * Algoritmos y Estructuras de Datos - Sección 10
  * Esta clase funciona como Factory de Maps que el user
